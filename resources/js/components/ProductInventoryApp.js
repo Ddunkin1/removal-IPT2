@@ -4,7 +4,7 @@ import ProductFilter from './ProductFilter';
 import ProductList from './ProductList';
 import ProductForm from './ProductForm';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api/product';
+const API_BASE_URL = '/api/product';
 
 function ProductInventoryApp() {
     const [products, setProducts] = useState([]);
