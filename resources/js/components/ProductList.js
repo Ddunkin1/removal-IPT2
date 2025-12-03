@@ -28,6 +28,7 @@ function ProductList({ products, onEdit, onDelete }) {
                     <tr>
                         <th>ID</th>
                         <th>Item Name</th>
+                        <th>Category</th>
                         <th>Item Cost</th>
                         <th>Description</th>
                         <th>Quantity</th>
@@ -52,6 +53,7 @@ function ProductList({ products, onEdit, onDelete }) {
                             <tr key={id}>
                                 <td>{id}</td>
                                 <td>{product.name}</td>
+                                <td>{product.category || '—'}</td>
                                 <td>
                                     <span className="price-badge">{formatCurrency(product.price)}</span>
                                 </td>
