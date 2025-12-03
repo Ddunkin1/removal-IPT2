@@ -7,8 +7,8 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #020617 100%);
-  color: #e5e7eb;
+  background: white;
+  color: #111827;
 }
 
 #inventory-root {
@@ -18,11 +18,11 @@ body {
 .inventory-app {
   max-width: 1120px;
   margin: 0 auto;
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.96));
-  border-radius: 1.5rem;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.8), 0 0 0 1px rgba(15, 23, 42, 0.9);
-  padding: 1.75rem 1.6rem 1.8rem;
+  background: transparent;
+  border-radius: 1rem;
+  border: 0;
+  box-shadow: none;
+  padding: 0 0 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -31,8 +31,8 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%), radial-gradient(circle at top right, rgba(129, 140, 248, 0.12), transparent 55%), radial-gradient(circle at bottom right, rgba(236, 72, 153, 0.14), transparent 55%);
-  opacity: 0.9;
+  background: transparent;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -42,57 +42,152 @@ body {
 }
 
 .inventory-header {
+  padding: 1.25rem 1.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.inventory-header-main {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.15rem;
+  border-radius: 0.85rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+
+.inventory-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #10b981;
+  color: #ecfdf5;
+}
+
+.inventory-header-icon-text {
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .inventory-title {
   margin: 0;
-  font-size: 1.55rem;
+  font-size: 2rem;
   letter-spacing: 0.03em;
   font-weight: 600;
-  color: #e5e7eb;
+  color: #111827;
 }
 
 .inventory-subtitle {
   margin: 0;
   font-size: 0.9rem;
-  color: #9ca3af;
-}
-
-.inventory-main {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.inventory-main-content {
-  background: rgba(15, 23, 42, 0.96);
-  border-radius: 1.05rem;
-  border: 1px solid rgba(148, 163, 184, 0.28);
-  padding: 1rem 1rem 0.9rem;
-}
-
-.inventory-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  color: #6b7280;
 }
 
 .inventory-filter {
   flex: 1;
 }
 
+.inventory-search-group {
+  display: flex;
+  flex: 1;
+  min-width: 260px;
+}
+
+.inventory-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.inventory-stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  padding: 0 1.5rem 0.75rem;
+}
+
+.inventory-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+
+.inventory-stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+}
+
+.inventory-stat-icon--products {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.inventory-stat-icon--value {
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.inventory-stat-icon--low-stock {
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.inventory-stat-icon--categories {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.inventory-stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.inventory-stat-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.inventory-stat-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.inventory-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 1.5rem 1rem;
+}
+
+.inventory-search-wrapper {
+  flex: 1;
+  max-width: 520px;
+}
+
+.inventory-content-card {
+  margin: 0 1.5rem;
+  padding: 1rem 1.2rem 1.1rem;
+  border-radius: 0.9rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+
 .inventory-input {
   width: 100%;
   border-radius: 999px;
-  border: 1px solid rgba(148, 163, 184, 0.45);
-  background: rgba(15, 23, 42, 0.9);
-  color: #e5e7eb;
+  border: 1px solid #d1d5db;
+  background: #f9fafb;
+  color: #111827;
   padding: 0.6rem 0.85rem;
   font-size: 0.88rem;
   outline: none;
@@ -100,17 +195,17 @@ body {
 }
 
 .inventory-input::-moz-placeholder {
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .inventory-input::placeholder {
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .inventory-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.65);
-  background: rgba(15, 23, 42, 0.98);
+  border-color: #10b981;
+  box-shadow: none;
+  background: #ffffff;
 }
 
 .inventory-input--textarea {
@@ -130,14 +225,14 @@ body {
 }
 
 .product-table thead {
-  background: rgba(15, 23, 42, 0.96);
+  background: #f9fafb;
 }
 
 .product-table th,
 .product-table td {
   padding: 0.55rem 0.65rem;
   text-align: left;
-  border-bottom: 1px solid rgba(51, 65, 85, 0.9);
+  border-bottom: 1px solid #e5e7eb;
   white-space: nowrap;
 }
 
@@ -145,27 +240,45 @@ body {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .product-table tbody tr:hover {
-  background: rgba(15, 23, 42, 0.96);
+  background: rgba(16, 185, 129, 0.09);
 }
 
 .inventory-state {
   padding: 0.8rem 0.85rem;
   font-size: 0.85rem;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .inventory-state--error {
   color: #fecaca;
 }
 
+.inventory-empty {
+  text-align: center;
+  padding: 2.2rem 1rem 2.4rem;
+}
+
+.inventory-empty-title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.inventory-empty-subtitle {
+  margin: 0 0 1.1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
 .inventory-sidebar {
-  background: rgba(15, 23, 42, 0.96);
-  border-radius: 1.05rem;
-  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #ffffff;
+  border-radius: 0.9rem;
+  border: 1px solid #e5e7eb;
   padding: 1.1rem 1.1rem 1rem;
 }
 
@@ -173,7 +286,7 @@ body {
   margin: 0 0 0.9rem;
   font-size: 0.95rem;
   font-weight: 500;
-  color: #e5e7eb;
+  color: #111827;
 }
 
 .product-form {
@@ -190,7 +303,7 @@ body {
 
 .form-group label {
   font-size: 0.78rem;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .form-row {
@@ -216,54 +329,52 @@ body {
   font-weight: 500;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.04s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
-  border-color: rgba(37, 99, 235, 0.85);
-  color: #eef2ff;
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.55);
+  background: #10b981;
+  border-color: #059669;
+  color: #ffffff;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  border-color: rgba(30, 64, 175, 0.9);
-  transform: translateY(-0.5px);
+  background: #059669;
+  border-color: #059669;
 }
 
 .btn-outline-secondary {
   background: transparent;
   border-color: rgba(148, 163, 184, 0.7);
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .btn-outline-secondary:hover {
-  background: rgba(30, 64, 175, 0.22);
+  background: #f9fafb;
   border-color: rgba(148, 163, 184, 0.9);
-  color: #e5e7eb;
+  color: #111827;
 }
 
 .btn-outline-primary {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(59, 130, 246, 0.75);
-  color: #bfdbfe;
+  background: transparent;
+  border-color: rgba(37, 99, 235, 0.5);
+  color: #059669;
 }
 
 .btn-outline-primary:hover {
-  background: rgba(37, 99, 235, 0.25);
+  background: rgba(16, 185, 129, 0.09);
   border-color: rgba(59, 130, 246, 0.95);
 }
 
 .btn-outline-danger {
-  background: rgba(15, 23, 42, 0.9);
-  border-color: rgba(239, 68, 68, 0.8);
-  color: #fecaca;
+  background: transparent;
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #ef4444;
 }
 
 .btn-outline-danger:hover {
-  background: rgba(248, 113, 113, 0.18);
-  border-color: rgba(239, 68, 68, 0.95);
+  background: rgba(248, 113, 113, 0.08);
+  border-color: rgba(239, 68, 68, 0.9);
 }
 
 .btn-sm {
@@ -275,21 +386,104 @@ body {
   margin-right: 0.5rem;
 }
 
+.btn-search {
+  border-radius: 0 999px 999px 0;
+  padding-inline: 1.1rem;
+  background: #10b981;
+  border-color: #059669;
+  color: #ffffff;
+}
+
+.btn-search:hover {
+  background: #059669;
+}
+
+.btn-add {
+  background: #22c55e;
+  border-color: #16a34a;
+  color: #ffffff;
+  padding-inline: 1.2rem;
+  box-shadow: none;
+}
+
+.btn-add:hover {
+  background: #16a34a;
+}
+
+.inventory-select {
+  min-width: 130px;
+  padding: 0.5rem 0.85rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #111827;
+  font-size: 0.85rem;
+}
+
+.inventory-select:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: none;
+}
+
+.btn-add-main {
+  background: #10b981;
+  border-color: #059669;
+  color: #ffffff;
+  padding-inline: 1.4rem;
+}
+
+.btn-add-main:hover {
+  background: #059669;
+}
+
+.price-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 0.15rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #ecfdf3;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.inventory-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+}
+
+.inventory-modal {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 0.9rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+  padding: 1.3rem 1.3rem 1.1rem;
+}
+
+.inventory-modal-title {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
 @media (min-width: 768px) {
   #inventory-root {
-    padding: 2.2rem;
+    padding: 1.8rem 2.4rem 2.4rem;
   }
-  .inventory-app {
-    padding: 1.8rem 1.75rem 1.9rem;
-  }
-  .inventory-main {
-    flex-direction: row;
-  }
-  .inventory-main-content {
-    flex: 2;
-  }
-  .inventory-sidebar {
-    flex: 1;
+  .inventory-stats-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
   .form-row {
     flex-direction: row;

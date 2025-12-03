@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 function ProductForm({ initialProduct, onSave, onCancel, saving }) {
     const [name, setName] = useState('');
+    const [category, setCategory] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
@@ -9,11 +10,13 @@ function ProductForm({ initialProduct, onSave, onCancel, saving }) {
     useEffect(() => {
         if (initialProduct) {
             setName(initialProduct.name || '');
+            setCategory(initialProduct.category || '');
             setPrice(initialProduct.price != null ? String(initialProduct.price) : '');
             setQuantity(initialProduct.quantity != null ? String(initialProduct.quantity) : '');
             setDescription(initialProduct.description || '');
         } else {
             setName('');
+            setCategory('');
             setPrice('');
             setQuantity('');
             setDescription('');
@@ -23,9 +26,12 @@ function ProductForm({ initialProduct, onSave, onCancel, saving }) {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        const cleanedPrice = price.replace(/,/g, '');
+
         const payload = {
             name: name.trim(),
-            price: price !== '' ? parseFloat(price) : null,
+            category: category || null,
+            price: cleanedPrice !== '' ? parseFloat(cleanedPrice) : null,
             quantity: quantity !== '' ? parseInt(quantity, 10) : null,
             description: description.trim(),
         };
@@ -49,9 +55,27 @@ function ProductForm({ initialProduct, onSave, onCancel, saving }) {
                 />
             </div>
 
+            <div className="form-group">
+                <label htmlFor="category">Category</label>
+                <select
+                    id="category"
+                    className="inventory-input"
+                    value={category}
+                    onChange={(event) => setCategory(event.target.value)}
+                >
+                    <option value="">Select Category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing & Apparel">Clothing & Apparel</option>
+                    <option value="Home & Kitchen">Home & Kitchen</option>
+                    <option value="Health & Beauty">Health & Beauty</option>
+                    <option value="Sports & Outdoors">Sports & Outdoors</option>
+                    <option value="Automotive">Automotive</option>
+                </select>
+            </div>
+
             <div className="form-row">
                 <div className="form-group">
-                    <label htmlFor="price">Price</label>
+                    <label htmlFor="price">Price (USD)</label>
                     <input
                         id="price"
                         type="number"
@@ -60,6 +84,7 @@ function ProductForm({ initialProduct, onSave, onCancel, saving }) {
                         onChange={(event) => setPrice(event.target.value)}
                         step="0.01"
                         min="0"
+                        placeholder="$0.00"
                     />
                 </div>
                 <div className="form-group">

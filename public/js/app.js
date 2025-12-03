@@ -58120,7 +58120,13 @@ __webpack_require__.r(__webpack_exports__);
 
 function ProductFilter(_ref) {
   var value = _ref.value,
-    _onChange = _ref.onChange;
+    _onChange = _ref.onChange,
+    onSearch = _ref.onSearch;
+  var handleKeyDown = function handleKeyDown(event) {
+    if (event.key === 'Enter' && onSearch) {
+      onSearch();
+    }
+  };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     className: "inventory-filter",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
@@ -58130,7 +58136,8 @@ function ProductFilter(_ref) {
       value: value,
       onChange: function onChange(event) {
         return _onChange(event.target.value);
-      }
+      },
+      onKeyDown: handleKeyDown
     })
   });
 }
@@ -58170,24 +58177,30 @@ function ProductForm(_ref) {
     setName = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState4 = _slicedToArray(_useState3, 2),
-    price = _useState4[0],
-    setPrice = _useState4[1];
+    category = _useState4[0],
+    setCategory = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
-    quantity = _useState6[0],
-    setQuantity = _useState6[1];
+    price = _useState6[0],
+    setPrice = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState8 = _slicedToArray(_useState7, 2),
-    description = _useState8[0],
-    setDescription = _useState8[1];
+    quantity = _useState8[0],
+    setQuantity = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState0 = _slicedToArray(_useState9, 2),
+    description = _useState0[0],
+    setDescription = _useState0[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (initialProduct) {
       setName(initialProduct.name || '');
+      setCategory(initialProduct.category || '');
       setPrice(initialProduct.price != null ? String(initialProduct.price) : '');
       setQuantity(initialProduct.quantity != null ? String(initialProduct.quantity) : '');
       setDescription(initialProduct.description || '');
     } else {
       setName('');
+      setCategory('');
       setPrice('');
       setQuantity('');
       setDescription('');
@@ -58195,9 +58208,11 @@ function ProductForm(_ref) {
   }, [initialProduct]);
   var handleSubmit = function handleSubmit(event) {
     event.preventDefault();
+    var cleanedPrice = price.replace(/,/g, '');
     var payload = {
       name: name.trim(),
-      price: price !== '' ? parseFloat(price) : null,
+      category: category || null,
+      price: cleanedPrice !== '' ? parseFloat(cleanedPrice) : null,
       quantity: quantity !== '' ? parseInt(quantity, 10) : null,
       description: description.trim()
     };
@@ -58223,12 +58238,47 @@ function ProductForm(_ref) {
         required: true
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "form-group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        htmlFor: "category",
+        children: "Category"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("select", {
+        id: "category",
+        className: "inventory-input",
+        value: category,
+        onChange: function onChange(event) {
+          return setCategory(event.target.value);
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "",
+          children: "Select Category"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Electronics",
+          children: "Electronics"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Clothing & Apparel",
+          children: "Clothing & Apparel"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Home & Kitchen",
+          children: "Home & Kitchen"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Health & Beauty",
+          children: "Health & Beauty"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Sports & Outdoors",
+          children: "Sports & Outdoors"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: "Automotive",
+          children: "Automotive"
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "form-row",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "form-group",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
           htmlFor: "price",
-          children: "Price"
+          children: "Price (USD)"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
           id: "price",
           type: "number",
@@ -58238,7 +58288,8 @@ function ProductForm(_ref) {
             return setPrice(event.target.value);
           },
           step: "0.01",
-          min: "0"
+          min: "0",
+          placeholder: "$0.00"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
         className: "form-group",
@@ -58334,22 +58385,29 @@ function ProductInventoryApp() {
     _useState4 = _slicedToArray(_useState3, 2),
     filterText = _useState4[0],
     setFilterText = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    loading = _useState6[0],
-    setLoading = _useState6[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('all'),
+    _useState6 = _slicedToArray(_useState5, 1),
+    stockFilter = _useState6[0];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    saving = _useState8[0],
-    setSaving = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    loading = _useState8[0],
+    setLoading = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState0 = _slicedToArray(_useState9, 2),
-    error = _useState0[0],
-    setError = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    saving = _useState0[0],
+    setSaving = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState10 = _slicedToArray(_useState1, 2),
-    editingProduct = _useState10[0],
-    setEditingProduct = _useState10[1];
+    error = _useState10[0],
+    setError = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    editingProduct = _useState12[0],
+    setEditingProduct = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    isFormOpen = _useState14[0],
+    setIsFormOpen = _useState14[1];
   var loadProducts = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
       var response, _t;
@@ -58513,60 +58571,213 @@ function ProductInventoryApp() {
       handleCreate(productData);
     }
   };
+  var handleToolbarSearch = function handleToolbarSearch() {
+    setFilterText(function (current) {
+      return current.trim();
+    });
+  };
+  var handleAddClick = function handleAddClick() {
+    setEditingProduct(null);
+    setIsFormOpen(true);
+  };
+  var handleEditClick = function handleEditClick(product) {
+    setEditingProduct(product);
+    setIsFormOpen(true);
+  };
+  var handleCloseForm = function handleCloseForm() {
+    setEditingProduct(null);
+    setIsFormOpen(false);
+  };
   var filteredProducts = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var term = filterText.trim().toLowerCase();
-    if (!term) {
-      return products;
-    }
     return products.filter(function (product) {
       if (!product || typeof product.name !== 'string') {
         return false;
       }
-      return product.name.toLowerCase().includes(term);
+      var matchesName = term ? product.name.toLowerCase().includes(term) : true;
+      var quantity = typeof product.quantity === 'number' ? product.quantity : product.quantity != null ? Number(product.quantity) : null;
+      var matchesStock = true;
+      if (stockFilter === 'in_stock') {
+        matchesStock = quantity != null && quantity > 0;
+      } else if (stockFilter === 'out_of_stock') {
+        matchesStock = quantity != null && quantity === 0;
+      }
+      return matchesName && matchesStock;
     });
-  }, [products, filterText]);
+  }, [products, filterText, stockFilter]);
+  var formatCurrency = function formatCurrency(value) {
+    var number = typeof value === 'number' ? value : value != null ? Number(value) : 0;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(number);
+  };
+  var stats = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    var totalProducts = products.length;
+    var totalValue = 0;
+    var lowStock = 0;
+    var categorySet = new Set();
+    products.forEach(function (product) {
+      var price = typeof product.price === 'number' ? product.price : product.price != null ? Number(product.price) : 0;
+      var quantity = typeof product.quantity === 'number' ? product.quantity : product.quantity != null ? Number(product.quantity) : 0;
+      var category = product && typeof product.category === 'string' ? product.category.trim() : '';
+
+      // Total value should match the Item Cost column, so sum price only
+      totalValue += price;
+      if (quantity > 0 && quantity <= 5) {
+        lowStock += 1;
+      }
+      if (category) {
+        categorySet.add(category);
+      }
+    });
+    return {
+      totalProducts: totalProducts,
+      totalValue: totalValue,
+      lowStock: lowStock,
+      categories: categorySet.size
+    };
+  }, [products]);
+  var hasProducts = filteredProducts.length > 0;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
     className: "inventory-app",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("header", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("header", {
       className: "inventory-header",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
-        className: "inventory-title",
-        children: "Product Inventory Manager"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-        className: "inventory-subtitle",
-        children: "Manage your products: add, update, delete, and filter by name."
-      })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("main", {
-      className: "inventory-main",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
-        className: "inventory-main-content",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-header-main",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-          className: "inventory-toolbar",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductFilter__WEBPACK_IMPORTED_MODULE_2__["default"], {
-            value: filterText,
-            onChange: setFilterText
+          className: "inventory-header-icon",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
+            className: "inventory-header-icon-text",
+            children: "PI"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductList__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          products: filteredProducts,
-          loading: loading,
-          error: error,
-          onEdit: setEditingProduct,
-          onDelete: handleDelete
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h1", {
+            className: "inventory-title",
+            children: "Product Inventory Manager"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+            className: "inventory-subtitle",
+            children: "Manage your product catalog"
+          })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("aside", {
-        className: "inventory-sidebar",
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "inventory-stats-row",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-stat-card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "inventory-stat-icon inventory-stat-icon--products"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "inventory-stat-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-value",
+            children: stats.totalProducts
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-label",
+            children: "Total Products"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-stat-card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "inventory-stat-icon inventory-stat-icon--value"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "inventory-stat-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-value",
+            children: formatCurrency(stats.totalValue)
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-label",
+            children: "Total Value"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-stat-card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "inventory-stat-icon inventory-stat-icon--low-stock"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "inventory-stat-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-value",
+            children: stats.lowStock
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-label",
+            children: "Low Stock"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-stat-card",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+          className: "inventory-stat-icon inventory-stat-icon--categories"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+          className: "inventory-stat-content",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-value",
+            children: stats.categories
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+            className: "inventory-stat-label",
+            children: "Categories"
+          })]
+        })]
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "inventory-toolbar-row",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "inventory-search-wrapper",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductFilter__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          value: filterText,
+          onChange: setFilterText,
+          onSearch: handleToolbarSearch
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+        type: "button",
+        className: "btn btn-add-main",
+        onClick: handleAddClick,
+        children: "+ Add Product"
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("section", {
+      className: "inventory-content-card",
+      children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "inventory-state",
+        children: "Loading products..."
+      }), !loading && error && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+        className: "inventory-state inventory-state--error",
+        children: error
+      }), !loading && !error && hasProducts && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductList__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        products: filteredProducts,
+        onEdit: handleEditClick,
+        onDelete: handleDelete
+      }), !loading && !error && !hasProducts && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-empty",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
-          className: "inventory-sidebar-title",
-          children: editingProduct ? 'Edit Product' : 'Add New Product'
+          className: "inventory-empty-title",
+          children: "No products found"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
+          className: "inventory-empty-subtitle",
+          children: "Get started by adding your first product to the inventory."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("button", {
+          type: "button",
+          className: "btn btn-add-main",
+          onClick: handleAddClick,
+          children: "+ Add Product"
+        })]
+      })]
+    }), isFormOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+      className: "inventory-modal-backdrop",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "inventory-modal",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
+          className: "inventory-modal-title",
+          children: editingProduct ? 'Edit Product' : 'Add Product'
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ProductForm__WEBPACK_IMPORTED_MODULE_4__["default"], {
           initialProduct: editingProduct,
           onSave: handleSave,
-          onCancel: function onCancel() {
-            return setEditingProduct(null);
-          },
+          onCancel: handleCloseForm,
           saving: saving
         }, editingProduct ? editingProduct.id : 'new')]
-      })]
+      })
     })]
   });
 }
@@ -58589,29 +58800,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
+var formatCurrency = function formatCurrency(value) {
+  var number = typeof value === 'number' ? value : value != null ? Number(value) : 0;
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(number);
+};
 function ProductList(_ref) {
   var products = _ref.products,
-    loading = _ref.loading,
-    error = _ref.error,
     onEdit = _ref.onEdit,
     onDelete = _ref.onDelete;
-  if (loading) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "inventory-state",
-      children: "Loading products..."
-    });
-  }
-  if (error) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "inventory-state inventory-state--error",
-      children: error
-    });
-  }
   if (!products || products.length === 0) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      className: "inventory-state",
-      children: "No products found."
-    });
+    return null;
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
     className: "product-list",
@@ -58620,28 +58823,42 @@ function ProductList(_ref) {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("thead", {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            children: "Name"
+            children: "ID"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            children: "Price"
+            children: "Item Name"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+            children: "Item Cost"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
+            children: "Description"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
             children: "Quantity"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
-            children: "Description"
+            children: "Available"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("th", {
             children: "Actions"
           })]
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("tbody", {
-        children: products.map(function (product) {
+        children: products.map(function (product, index) {
+          var quantity = typeof product.quantity === 'number' ? product.quantity : product.quantity != null ? Number(product.quantity) : 0;
+          var available = quantity;
+          var id = product.id != null ? product.id : index + 1;
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("tr", {
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+              children: id
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
               children: product.name
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-              children: product.price
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
-              children: product.quantity
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+                className: "price-badge",
+                children: formatCurrency(product.price)
+              })
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
               children: product.description
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+              children: quantity
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("td", {
+              children: available
             }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("td", {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
                 type: "button",
@@ -58659,7 +58876,7 @@ function ProductList(_ref) {
                 children: "Delete"
               })]
             })]
-          }, product.id);
+          }, id);
         })
       })]
     })
