@@ -42,6 +42,7 @@ function ProductInventoryApp() {
             await axios.post(API_BASE_URL, productData);
             await loadProducts();
             setEditingProduct(null);
+            setIsFormOpen(false);
         } catch (err) {
             setError('Failed to create product. Please check the data and try again.');
         } finally {
@@ -61,6 +62,7 @@ function ProductInventoryApp() {
             await axios.put(`${API_BASE_URL}/${editingProduct.id}`, productData);
             await loadProducts();
             setEditingProduct(null);
+            setIsFormOpen(false);
         } catch (err) {
             setError('Failed to update product. Please try again.');
         } finally {

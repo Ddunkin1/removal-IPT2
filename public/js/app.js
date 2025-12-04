@@ -58460,6 +58460,7 @@ function ProductInventoryApp() {
             return loadProducts();
           case 3:
             setEditingProduct(null);
+            setIsFormOpen(false);
             _context2.n = 5;
             break;
           case 4:
@@ -58501,6 +58502,7 @@ function ProductInventoryApp() {
             return loadProducts();
           case 4:
             setEditingProduct(null);
+            setIsFormOpen(false);
             _context3.n = 6;
             break;
           case 5:
